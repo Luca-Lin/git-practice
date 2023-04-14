@@ -37,14 +37,21 @@ SSH（Secure Shell）是一種安全的網路協定，預設是走 22 port，
 
 ### 產生一組 ssh
 
-MacOS、Windows、Linux 都可以透過以下指令產生一組非對稱式的公私鑰。其中 key_name 是用來標示這把 key 的名稱，不標示也行。
+MacOS、Windows、Linux 都可以透過以下指令產生一組非對稱式的公私鑰。
+
+其中 `-C "key_name"` 是用來標示這把 key 的名稱，不標示也行。
+
+`-t ed25519` 則是將演算法指定為 ed25519 ，是目前常用的公鑰格式。相比預設的 RSA 演算法，公鑰長度會比較短。
 
 ```bash
 ssh-keygen -t ed25519 -C "key_name"
 ```
 
-這把 key 預設會產生名為 `id_ed25519` 的檔案在 `~/.ssh/` 資料夾底下。
-如果要改地方可以在產生的時候，指定位置，像是我這邊是指定當前資料夾 `./id_ed25519`
+一開始會詢問這把 key 預設會產生名為 `id_ed25519` 的檔案在 `~/.ssh/` 資料夾底下。
+
+如果要改地方可以在產生的時候，指定位置，像是我這邊是指定當前資料夾 `./id_ed25519`。
+
+然後一直按 Enter 就可以產生名為 id_ed25519 的私鑰和 id_ed25519.pub 的公鑰。
 
 ```bash
 Generating public/private ed25519 key pair.
@@ -68,3 +75,9 @@ The key's randomart image is:
 |                 |
 +----[SHA256]-----+
 ```
+
+## 設定公鑰在伺服器上
+
+在 Github 可以在 https://github.com/settings/keys 設定你的公鑰，如果你有多台電腦的話，可以考慮命名清楚。這樣在不同電腦使用 SSH 與 Github 伺服器溝通就不用一直輸入密碼。
+
+![public_key](https://github.com/Luca-Lin/git-practice/blob/main/images/remote/public_key.png)
